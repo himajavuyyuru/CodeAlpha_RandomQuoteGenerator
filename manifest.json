@@ -1,0 +1,14 @@
+{
+  "name": "Random Quote Generator",
+  "short_name": "Quotes",
+  "description": "A clean random quote generator built for the CodeAlpha App Development internship.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#E9EDEE",
+  "theme_color": "#37474F",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
