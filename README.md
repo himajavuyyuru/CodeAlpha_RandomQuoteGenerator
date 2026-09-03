@@ -40,9 +40,3 @@ No build step or dependencies required.
 - **Add or edit quotes:** edit the `quotes` array at the top of `script.js` — each entry is `{ text, author }`.
 - **Change the look:** edit the CSS custom properties in the `:root` block at the top of `style.css`.
 
-## Internship Submission Checklist
-
-- [ ] Push this code to a GitHub repo named `CodeAlpha_RandomQuoteGenerator`
-- [ ] Record a short video walking through the project and the code
-- [ ] Post the video on LinkedIn, tagging **@CodeAlpha**, with the GitHub repo link
-- [ ] Submit via the CodeAlpha submission form shared in your WhatsApp group
