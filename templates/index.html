@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Random Quote Generator</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-family: "Segoe UI", Arial, sans-serif;
+
+            background: linear-gradient(135deg, #667eea, #764ba2);
+
+            padding: 20px;
+
+            transition: 0.4s ease;
+        }
+
+        /* DARK MODE */
+
+        body.dark {
+            background: linear-gradient(135deg, #141e30, #243b55);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 720px;
+            text-align: center;
+        }
+
+        /* HEADER */
+
+        .top-bar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+        }
+
+        .theme-btn {
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+
+            width: 45px;
+            height: 45px;
+
+            border-radius: 50%;
+
+            font-size: 20px;
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .theme-btn:hover {
+            transform: rotate(20deg) scale(1.1);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .app-title {
+            color: white;
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        /* QUOTE CARD */
+
+        .quote-card {
+            background: rgba(255, 255, 255, 0.97);
+
+            border-radius: 22px;
+
+            padding: 50px 45px;
+
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.25);
+
+            transition:
+                0.4s ease,
+                transform 0.3s ease;
+        }
+
+        body.dark .quote-card {
+            background: #1f2937;
+        }
+
+        .quote-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .quote-icon {
+            font-size: 60px;
+            line-height: 1;
+
+            margin-bottom: 20px;
+
+            color: #667eea;
+        }
+
+        .quote-text {
+            color: #2d3748;
+
+            font-size: 26px;
+            line-height: 1.5;
+
+            font-weight: 500;
+
+            margin-bottom: 20px;
+
+            transition: 0.3s;
+        }
+
+        body.dark .quote-text {
+            color: #f3f4f6;
+        }
+
+        .author {
+            color: #667eea;
+
+            font-size: 18px;
+            font-weight: 700;
+
+            margin-bottom: 30px;
+        }
+
+        .author::before {
+            content: "— ";
+        }
+
+        /* BUTTONS */
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        .new-quote-btn {
+            border: none;
+
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #764ba2
+            );
+
+            color: white;
+
+            font-size: 16px;
+            font-weight: 600;
+
+            padding: 14px 25px;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .new-quote-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .action-btn {
+            border: 2px solid #667eea;
+
+            background: transparent;
+
+            color: #667eea;
+
+            font-size: 15px;
+            font-weight: 600;
+
+            padding: 12px 20px;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        body.dark .action-btn {
+            color: #a5b4fc;
+            border-color: #a5b4fc;
+        }
+
+        .action-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        body.dark .action-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* FAVORITE STATUS */
+
+        .favorite-status {
+            margin-top: 20px;
+
+            color: #667eea;
+
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        body.dark .favorite-status {
+            color: #a5b4fc;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            margin-top: 25px;
+
+            color: rgba(255, 255, 255, 0.75);
+
+            font-size: 13px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            .app-title {
+                font-size: 30px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+            }
+
+            .quote-card {
+                padding: 35px 22px;
+            }
+
+            .quote-icon {
+                font-size: 45px;
+            }
+
+            .quote-text {
+                font-size: 21px;
+            }
+
+            .author {
+                font-size: 16px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .new-quote-btn,
+            .action-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- DARK MODE BUTTON -->
+
+        <div class="top-bar">
+            <button
+                class="theme-btn"
+                onclick="toggleDarkMode()"
+                id="themeButton"
+                title="Toggle Dark Mode">
+                🌙
+            </button>
+        </div>
+
+        <!-- TITLE -->
+
+        <h1 class="app-title">
+            Random Quote Generator
+        </h1>
+
+        <p class="subtitle">
+            A little inspiration for your day ✨
+        </p>
+
+        <!-- QUOTE CARD -->
+
+        <div class="quote-card">
+
+            <div class="quote-icon">
+                ❝
+            </div>
+
+            <p class="quote-text" id="quoteText">
+                {{ quote.text }}
+            </p>
+
+            <p class="author" id="quoteAuthor">
+                {{ quote.author }}
+            </p>
+
+            <!-- BUTTONS -->
+
+            <div class="buttons">
+
+                <!-- NEW QUOTE -->
+
+                <form action="/" method="GET">
+                    <button
+                        type="submit"
+                        class="new-quote-btn">
+                        ✨ New Quote
+                    </button>
+                </form>
+
+                <!-- COPY -->
+
+                <button
+                    class="action-btn"
+                    onclick="copyQuote()">
+                    📋 Copy Quote
+                </button>
+
+                <!-- FAVORITE -->
+
+                <button
+                    class="action-btn"
+                    onclick="toggleFavorite()"
+                    id="favoriteButton">
+                    ♡ Favorite
+                </button>
+
+            </div>
+
+            <div
+                class="favorite-status"
+                id="favoriteStatus">
+            </div>
+
+        </div>
+
+        <p class="footer">
+            Get inspired • Stay positive • Keep moving forward
+        </p>
+
+    </div>
+
+
+    <script>
+
+        /* =========================
+           DARK MODE
+        ========================= */
+
+        function toggleDarkMode() {
+
+            document.body.classList.toggle("dark");
+
+            const button =
+                document.getElementById("themeButton");
+
+            if (document.body.classList.contains("dark")) {
+
+                button.innerHTML = "☀️";
+
+                localStorage.setItem(
+                    "darkMode",
+                    "enabled"
+                );
+
+            } else {
+
+                button.innerHTML = "🌙";
+
+                localStorage.setItem(
+                    "darkMode",
+                    "disabled"
+                );
+            }
+        }
+
+
+        /* LOAD DARK MODE */
+
+        window.onload = function() {
+
+            if (
+                localStorage.getItem("darkMode")
+                === "enabled"
+            ) {
+
+                document.body.classList.add("dark");
+
+                document.getElementById(
+                    "themeButton"
+                ).innerHTML = "☀️";
+            }
+
+            updateFavoriteButton();
+        };
+
+
+        /* =========================
+           COPY QUOTE
+        ========================= */
+
+        function copyQuote() {
+
+            const text =
+                document.getElementById(
+                    "quoteText"
+                ).innerText;
+
+            const author =
+                document.getElementById(
+                    "quoteAuthor"
+                ).innerText;
+
+            const completeQuote =
+                `"${text}" ${author}`;
+
+            navigator.clipboard.writeText(
+                completeQuote
+            ).then(function() {
+
+                alert("Quote copied to clipboard! 📋");
+
+            }).catch(function() {
+
+                alert("Unable to copy the quote.");
+
+            });
+        }
+
+
+        /* =========================
+           FAVORITE QUOTE
+        ========================= */
+
+        function toggleFavorite() {
+
+            const text =
+                document.getElementById(
+                    "quoteText"
+                ).innerText;
+
+            const author =
+                document.getElementById(
+                    "quoteAuthor"
+                ).innerText;
+
+            const quote = {
+                text: text,
+                author: author
+            };
+
+            let favorites =
+                JSON.parse(
+                    localStorage.getItem(
+                        "favorites"
+                    )
+                ) || [];
+
+            const existingIndex =
+                favorites.findIndex(function(item) {
+
+                    return (
+                        item.text === quote.text &&
+                        item.author === quote.author
+                    );
+
+                });
+
+
+            if (existingIndex === -1) {
+
+                favorites.push(quote);
+
+                localStorage.setItem(
+                    "favorites",
+                    JSON.stringify(favorites)
+                );
+
+                alert("Quote added to favorites ❤️");
+
+            } else {
+
+                favorites.splice(
+                    existingIndex,
+                    1
+                );
+
+                localStorage.setItem(
+                    "favorites",
+                    JSON.stringify(favorites)
+                );
+
+                alert("Quote removed from favorites.");
+
+            }
+
+            updateFavoriteButton();
+        }
+
+
+        /* UPDATE FAVORITE BUTTON */
+
+        function updateFavoriteButton() {
+
+            const text =
+                document.getElementById(
+                    "quoteText"
+                ).innerText;
+
+            const author =
+                document.getElementById(
+                    "quoteAuthor"
+                ).innerText;
+
+            let favorites =
+                JSON.parse(
+                    localStorage.getItem(
+                        "favorites"
+                    )
+                ) || [];
+
+            const isFavorite =
+                favorites.some(function(item) {
+
+                    return (
+                        item.text === text &&
+                        item.author === author
+                    );
+
+                });
+
+            const button =
+                document.getElementById(
+                    "favoriteButton"
+                );
+
+            const status =
+                document.getElementById(
+                    "favoriteStatus"
+                );
+
+
+            if (isFavorite) {
+
+                button.innerHTML =
+                    "❤️ Favorited";
+
+                status.innerHTML =
+                    "This quote is in your favorites ❤️";
+
+            } else {
+
+                button.innerHTML =
+                    "♡ Favorite";
+
+                status.innerHTML = "";
+            }
+        }
+
+    </script>
+
+</body>
+</html>
